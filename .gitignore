@@ -1,0 +1,28 @@
+# Binaries and build artifacts
+webserv
+webserv_bonus
+obj/
+*.o
+*.d
+
+# Compiler / Language Server artifacts
+compile_commands.json
+.cache/
+.clangd/
+
+# Debug and profiling files
+*.dSYM/
+core
+vgcore.*
+
+# Editor and IDE configurations
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+.directory
+
+# OS specific files
+.DS_Store
+Thumbs.db
