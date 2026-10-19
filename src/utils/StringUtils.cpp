@@ -9,13 +9,21 @@
 
 namespace utils {
 
-static char toLowerChar(char c) {
-	return static_cast<char>(std::tolower(static_cast<unsigned char>(c)));
-}
+struct ToLowerChar {
+	char operator()(char c) {
+		return static_cast<char>(std::tolower(static_cast<unsigned char>(c)));
+	}
+};
 
-static char toUpperChar(char c) {
-	return static_cast<char>(std::toupper(static_cast<unsigned char>(c)));
-}
+static ToLowerChar toLowerChar;
+
+struct ToUpperChar {
+	char operator()(char c) {
+		return static_cast<char>(std::toupper(static_cast<unsigned char>(c)));
+	}
+};
+
+static ToUpperChar toUpperChar;
 
 std::string toLower(std::string str) {
 	std::transform(str.begin(), str.end(), str.begin(), toLowerChar);
@@ -34,10 +42,6 @@ std::string trim(const std::string &str) {
 		++start;
 	}
 
-	if (start == str.size()) {
-		return "";
-	}
-
 	size_t end = str.size() - 1;
 	while (end > start && std::isspace(static_cast<unsigned char>(str[end]))) {
 		--end;
@@ -48,15 +52,16 @@ std::string trim(const std::string &str) {
 
 std::vector<std::string> split(const std::string &str, char delimiter) {
 	std::vector<std::string> tokens;
+
 	size_t start = 0;
-	size_t end = str.find(delimiter);
+	size_t end	 = str.find(delimiter);
 
 	while (end != std::string::npos) {
 		if (end > start) {
 			tokens.push_back(str.substr(start, end - start));
 		}
 		start = end + 1;
-		end = str.find(delimiter, start);
+		end	  = str.find(delimiter, start);
 	}
 
 	if (start < str.size()) {
